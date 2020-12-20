@@ -1,0 +1,114 @@
+{% extends "TelegramChannels/base.html" %}
+{% block table %}
+    <style>
+
+        table {
+            border: 1px solid #69c;
+        }
+
+        th {
+            font-weight: normal;
+            color: #039;
+            border-bottom: 1px dashed #69c;
+            padding: 12px 17px;
+        }
+
+        td {
+            color: #669;
+            padding: 7px 17px;
+        }
+
+        tr:hover td {
+            background: #ccddff;
+        }
+
+        .animated-search-form[type=search] {
+            width: 10rem;
+            border: 0.125rem solid #e6e6e6;
+            box-shadow: 0 0 1rem rgba(0, 0, 0, 0.18);
+            border-radius: 0;
+            background-image: url("https://image.ibb.co/i7NbrQ/search_icon_15.png");
+            background-position: 0.625rem 0.625rem;
+            background-repeat: no-repeat;
+            padding: 0.75rem 1.25rem 0.75rem 2rem;
+            transition: width 0.4s ease-in-out;
+        }
+
+        .animated-search-form[type=search]:focus {
+            width: 70%;
+        }
+    </style>
+
+
+    <div class="container-xl">
+        <h1>Таблиця</h1>
+
+        <form id="form" name="form" method="GET">
+            <input type="search" placeholder="Пошук.." class="animated-search-form" name="q">
+        </form>
+        <br>
+        <form id="myform" name="myform" method="post">
+            {% csrf_token %}
+            <a type="submit" href="{% url 'add_channel' %}" class="btn btn-primary">Створити</a>
+            <button type="submit" form="myform" name="edit" class="btn btn-warning">Редагувати</button>
+            <button type="submit" form="myform" name="del" class="btn btn-danger">Видалити</button>
+
+            <br>
+            <br>
+            <table width="100%">
+                <tr>
+                    <th width="5%"></th>
+                    <th width="5%">№</th>
+                    <th width="25%">Канал</th>
+                    <th width="33%">ФІО</th>
+                    <th width="33%">Основна спрямованість каналу</th>
+                    {#  contact_information_for_communication#}
+                </tr>
+
+                {% for el in  pages %}
+                    <tr>
+                        <td><input type="checkbox" value={{ el.id }} id={{ el.id }}
+                                   name={{ el.id }}></td>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="/TelegramChannels/channel/{{ el.id }}">{{ el.name }}</a></td>
+                        <td>{{ el.name_administrator }}</td>
+                        <td>{{ el.the_main_focus_of_the_channel }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </form>
+        <br>
+
+        {% if is_paginated %}
+            <ul class="pagination">
+                <li class="page-item {% if not prev_url %}disabled{% endif %}">
+                    <a class="page-link" href="{{ prev_url }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% for page in pages.paginator.page_range %}
+                    {% if pages.number == page %}
+                        <li class="page-item active">
+                            <a class="page-link" href="?page={{ page }}">
+                                {{ page }}<span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    {% elif page >  pages.number|add:-3  and  page < pages.number|add:3 %}
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ page }}">{{ page }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item {% if not next_url %}disabled{% endif %}">
+                    <a class="page-link" href="{{ next_url }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+
+            </ul>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

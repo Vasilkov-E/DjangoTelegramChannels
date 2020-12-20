@@ -1,0 +1,53 @@
+{% extends "TelegramChannels/base.html" %}
+
+{% block content %}
+    <form enctype="multipart/form-data" action="{% url 'add_channel' %}" method="post">
+        {% csrf_token %}
+        <blockquote class="blockquote text-center"><h3>Загальна інформація про ресурс</h3></blockquote>
+        <p>
+            Назва Telegram каналу: {{ form.name }}<br>
+        </p>
+        <p>
+            Загальна інформація про ресурс: {{ form.general_information_about_the_resource }}<br>
+        </p><br>
+        {{ form.adres_img_for_general_information_about_the_resource }}
+        <blockquote class="blockquote text-center">
+            <h3>Дані про власника</h3>
+        </blockquote>
+        <p>ФІО: {{ form.name_administrator }}</p>
+        <p>Інше: <br>
+            {{ form.other }}</p><br>
+        <blockquote class="blockquote text-center">
+            <h3>Вміст ресурсу (станом на: {{ form.resource_content_date }} )</h3>
+        </blockquote><br>
+
+{#        <p>{{ form.adres_img_for_general_information_about_the_resource }}</p><br><br>#}
+        <p>
+            Дата створення ресурсу: {{ form.date_of_resourc_creation }}
+        </p>
+        <p>
+            Вміст ресурсу станом на: {{ form.resource_content_date }}
+        </p>
+        <p>
+            Канал розміщує близько {{ form.publications_per_day }} публікацій в день.
+        </p>
+        <p>
+            Основна спрямованість каналу: {{ form.the_main_focus_of_the_channel }}
+        </p>
+        <p>
+            Суміжні напрямки: {{ form.related_areas }}
+        </p>
+        <p>
+            Вміст каналу: {{ form.channel_content }}
+        </p>
+        <p>
+            Перегляди: {{ form.views }}
+        </p>
+
+
+        <blockquote class="blockquote text-center">
+            <input type="submit" value="Відправити">
+        </blockquote>
+        <br>
+    </form>
+{% endblock %}

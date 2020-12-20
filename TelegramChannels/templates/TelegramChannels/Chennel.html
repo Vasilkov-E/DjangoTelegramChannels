@@ -1,0 +1,23 @@
+{% extends "TelegramChannels/base.html" %}
+
+{% block channel %}
+    <div class="container-sm">
+            <bloc class="blockquote text-center">
+                <h4>{{ channel.name }}</h4><br>
+            </bloc>
+            <h4>Загальна інформація про ресурс</h4><br>
+            {{ channel.general_information_about_the_resource }}<br><br>
+                <img src="{{channel.adres_img_for_general_information_about_the_resource.url }}" width="400px"
+                     align="center" hspace="20%" vspace="1%"/><br><br>
+            <b>Дата створення ресурсу:</b>   {{channel.date_of_resourc_creation }}<br><br>
+            <b>Канал розміщує близько {{ channel.publications_per_day }} публікацій в день.</b><br><br>
+            <b>Основна спрямованість каналу: </b>channel.the_main_focus_of_the_channel }}<br><br>
+            <b>Суміжні напрямки: </b>{{ channel.related_areas }}<br><br>
+            <b>Вміст каналу: </b>{{ channel.channel_content }}<br><br>
+            <b>Перегляди: </b>{{ channel.views }}<br><br>
+            <h4>Причетні до ресурсу особи</h4><br>
+            <b>ФІО: </b> {{ channel.name_administrator }}<br><br>
+             <b>Інше:</b> <br>{{ channel.other }}<br><br>
+
+    </div>
+{% endblock %}

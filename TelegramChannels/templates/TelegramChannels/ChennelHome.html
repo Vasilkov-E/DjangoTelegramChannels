@@ -1,0 +1,103 @@
+{% extends "TelegramChannels/base.html" %}
+
+{% block channel %}
+    <style>
+
+        table {
+            border: 1px solid #69c;
+        }
+
+        th {
+            font-weight: normal;
+            color: #039;
+            border-bottom: 1px dashed #69c;
+            padding: 12px 17px;
+        }
+
+        td {
+            color: #669;
+            padding: 7px 17px;
+        }
+
+        tr:hover td {
+            background: #ccddff;
+        }
+
+        .animated-search-form[type=search] {
+            width: 10rem;
+            border: 0.125rem solid #e6e6e6;
+            box-shadow: 0 0 1rem rgba(0, 0, 0, 0.18);
+            border-radius: 0;
+            background-image: url("https://image.ibb.co/i7NbrQ/search_icon_15.png");
+            background-position: 0.625rem 0.625rem;
+            background-repeat: no-repeat;
+            padding: 0.75rem 1.25rem 0.75rem 2rem;
+            transition: width 0.4s ease-in-out;
+        }
+
+        .animated-search-form[type=search]:focus {
+            width: 70%;
+        }
+    </style>
+
+    <form id="form" name="form" method="GET">
+            <input type="search" placeholder="Пошук.." class="animated-search-form" name="q">
+        </form><br>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {% for el in pages %}
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 fw-normal">{{ el.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ el.adres_img_for_general_information_about_the_resource.url }}" width="200px"
+                             align="center" hspace="20%" vspace="1%"/><br><br>
+                        {#                    <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>#}
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>{{ el.general_information_about_the_resource }}</li>
+                        </ul>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-people-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                        </svg>
+                        {{ el.views }}
+                        <a type="button" href="/TelegramChannels/channel/{{ el.id }}" class="w-100 btn btn-lg btn-outline-primary">Дивитись</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+{% if is_paginated %}
+            <ul class="pagination">
+                <li class="page-item {% if not prev_url %}disabled{% endif %}">
+                    <a class="page-link" href="{{ prev_url }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% for page in pages.paginator.page_range %}
+                    {% if pages.number == page %}
+                        <li class="page-item active">
+                            <a class="page-link" href="?page={{ page }}">
+                                {{ page }}<span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    {% elif page >  pages.number|add:-3  and  page < pages.number|add:3 %}
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ page }}">{{ page }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item {% if not next_url %}disabled{% endif %}">
+                    <a class="page-link" href="{{ next_url }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

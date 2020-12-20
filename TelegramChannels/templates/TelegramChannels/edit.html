@@ -1,0 +1,55 @@
+{% extends "TelegramChannels/base.html" %}
+
+{% block content %}
+    <form enctype="multipart/form-data"  method="post">
+        {% csrf_token %}
+        <blockquote class="blockquote text-center"><h3>Загальна інформація про ресурс</h3></blockquote>
+        <p>
+            Назва Telegram каналу: <input type="text" name="name" value="{{form.name}}" /><br>
+        </p>
+        <p>
+            Загальна інформація про ресурс: <input type="text" name="general_information_about_the_resource" value="{{ form.general_information_about_the_resource }}"/><br>
+        </p><br>
+        <img src="{{form.adres_img_for_general_information_about_the_resource.url }}" width="400px"
+                     align="center" hspace="20%" vspace="1%"/><br><br>
+        {{ file.adres }}
+        <blockquote class="blockquote text-center">
+            <h3>Дані про власника</h3>
+        </blockquote>
+        <p>ФІО: <input type="text" name="name_administrator" value="{{ form.name_administrator }}"/></p>
+        <p>Інше: <br>
+            <textarea   name="other" >{{ form.other }}</textarea>
+        </p><br>
+        <blockquote class="blockquote text-center">
+            <h3>Вміст ресурсу (станом на: <input type="text" name="resource_content_date" value="{{ form.resource_content_date }}"/> )</h3>
+        </blockquote><br>
+
+        <p>
+            Дата створення ресурсу: <input type="text" name="date_of_resourc_creation" value="{{ form.date_of_resourc_creation }}"/>
+        </p>
+        <p>
+            Вміст ресурсу станом на: <input type="text" name="resource_content_date" value="{{ form.resource_content_date }}"/>
+        </p>
+        <p>
+            Канал розміщує близько <input type="text" name="publications_per_day" value="{{ form.publications_per_day }}"/> публікацій в день.
+        </p>
+        <p>
+            Основна спрямованість каналу: <input type="text" name="the_main_focus_of_the_channel" value="{{ form.the_main_focus_of_the_channel }}"/>
+        </p>
+        <p>
+            Суміжні напрямки: <input type="text" name="related_areas" value="{{ form.related_areas }}"/>
+        </p>
+        <p>
+            Вміст каналу: <input type="text" name="channel_content" value="{{ form.channel_content }}"/>
+        </p>
+        <p>
+            Перегляди: <input type="text" name="views" value="{{ form.views }}"/>
+        </p>
+
+
+        <blockquote class="blockquote text-center">
+            <input type="submit" value="Відправити">
+        </blockquote>
+        <br>
+    </form>
+{% endblock %}
