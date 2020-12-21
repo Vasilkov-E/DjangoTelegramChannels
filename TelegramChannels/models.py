@@ -3,8 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 
-# manage.py makemigrations     # для создания бд
-# manage.py migrate
+
 
 
 class Channels(models.Model):
